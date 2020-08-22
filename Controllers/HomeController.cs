@@ -8,27 +8,108 @@ using Microsoft.Extensions.Logging;
 using bi_testproj.Models;
 using bi_testproj.Utils;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 
 namespace bi_testproj.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private DbConnectioHelper connectionHelper;
 
         public HomeController(ILogger<HomeController> logger)
         {
+            var connectionString = "Data Source=localhost;Initial Catalog=KidCalc_DW;Integrated Security=True";
+            connectionHelper = new DbConnectioHelper(connectionString);
+
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var labels = new string[] { "Mar 1", "Mar 2", "Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9", "Mar 10", "Mar 11", "Mar 12", "Mar 13" };
-            var data = new int[] { 10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984, 38451 };
+            var sqlQuery = "select taskcd.[Date], taskst.[Task Status], tasks.JobId, tasks.[User Group Name], taskst.[Task Message] from [dbo].[Fact_Task] as tasks "
+                            + "inner join[dbo].[Dim_TaskCreationDate] as taskcd "
+                            + "on tasks.[Creation Date Key] = taskcd.[Date Key] "
+                            + "inner join[dbo].[Dim_TaskStatus] as taskst "
+                            + "on taskst.[Task Status Key] = tasks.[Task Status Key] "
+                            + "where taskcd.[Date] between @startDate and @endDate";
 
-            ViewBag.Labels = labels;
-            ViewBag.Data = data;
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("@startDate", DateTime.Now.AddDays(-12));
+            parameters.Add("@endDate", DateTime.Now);
+
+            var queryResults = await connectionHelper.GetDbResultAsync(sqlQuery, parameters);
+
+            var succeededAdhoc = new SortedList<DateTime, int>();
+            var failedAdhoc = new SortedList<DateTime, int>();
+
+            foreach (var row in queryResults.Where(x => String.IsNullOrEmpty((string)x[2])))
+            {
+                var date = (DateTime)row[0];
+                if (!succeededAdhoc.ContainsKey(date))
+                    succeededAdhoc.Add(date, 0);
+                if (!failedAdhoc.ContainsKey(date))
+                    failedAdhoc.Add(date, 0);
+
+
+                if ((string)row[1] == "Succeeded")
+                    succeededAdhoc[date]++;
+                else
+                    failedAdhoc[date]++;
+            }
+
+            var succeededBatch = new SortedList<DateTime, int>();
+            var failedBatch = new SortedList<DateTime, int>();
+
+            foreach (var row in queryResults.Where(x => !String.IsNullOrEmpty((string)x[2])))
+            {
+                var date = (DateTime)row[0];
+
+                if (!succeededBatch.ContainsKey(date))
+                    succeededBatch.Add(date, 0);
+                if (!failedBatch.ContainsKey(date))
+                    failedBatch.Add(date, 0);
+
+                if ((string)row[1] == "Succeeded")
+                    succeededBatch[date]++;
+                else
+                    failedBatch[date]++;
+            }
+
+            ViewBag.LabelsAdhoc = succeededAdhoc.Keys.Select(d => d.ToString("yyyy-MM-dd")).ToArray();
+            ViewBag.DataSucceededAdhoc = succeededAdhoc.Values.ToArray();
+            ViewBag.DataFailedAdhoc = failedAdhoc.Values.ToArray();
+            ViewBag.MaxYTickAdhoc = GetMaxYTick(succeededAdhoc.Values.ToArray(), failedAdhoc.Values.ToArray());
+
+            ViewBag.LabelsBatch = succeededBatch.Keys.Select(d => d.ToString("yyyy-MM-dd")).ToArray();
+            ViewBag.DataSucceededBatch = succeededBatch.Values.ToArray();
+            ViewBag.DataFailedBatch = failedBatch.Values.ToArray();
+            ViewBag.MaxYTickBatch = GetMaxYTick(succeededBatch.Values.ToArray(), failedBatch.Values.ToArray());
+
+            var messages = new Dictionary<string, int>();
+            foreach (var row in queryResults.Where(x => !String.IsNullOrEmpty((string)x[4])))
+            {
+                var message = (string)row[4];
+
+                if (!messages.ContainsKey(message))
+                    messages.Add(message, 0);
+                else
+                    messages[message]++;
+            }
 
             return View();
+        }
+
+        private int GetMaxYTick(int[] succeeded, int[] failed)
+        {
+            int max = 0;
+            for(int i = 0; i < succeeded.Length; i++)
+            {
+                var sum = succeeded[i] + failed[i];
+                if (sum > max)
+                    max = sum;
+            }
+            return max;
         }
 
         public IActionResult Privacy()

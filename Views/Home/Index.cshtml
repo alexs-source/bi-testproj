@@ -3,103 +3,223 @@
 }
 @section scripts {
     <script>
-            // Set new default font family and font color to mimic Bootstrap's default styling
-            Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-            Chart.defaults.global.defaultFontColor = '#292b2c';
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
 
-            // Area Chart Example
-            var chartSettings = {
-                type: 'bar',
-                data: {
-                    labels: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.Labels),
-                    datasets: [{
-                        label: "Succeded",
-                        lineTension: 0.3,
-                        backgroundColor: "rgba(2,117,216,0.2)",
-                        borderColor: "rgba(2,117,216,1)",
-                        pointRadius: 5,
-                        pointBackgroundColor: "rgba(2,117,216,1)",
-                        pointBorderColor: "rgba(255,255,255,0.8)",
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: "rgba(2,117,216,1)",
-                        pointHitRadius: 50,
-                        pointBorderWidth: 2,
-                        data: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.Data),
-                    },
-                    {
-                        label: "Failed",
-                        lineTension: 0.3,
-                        backgroundColor: "rgba(255,117,216,0.2)",
-                        borderColor: "rgba(255,117,216,1)",
-                        pointRadius: 5,
-                        pointBackgroundColor: "rgba(255,117,216,1)",
-                        pointBorderColor: "rgba(255,255,255,0.8)",
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: "rgba(255,117,216,1)",
-                        pointHitRadius: 50,
-                        pointBorderWidth: 2,
-                        data: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.Data),
+        // Chart Adhoc Results
+        var chartSettingsAdhoc = {
+            type: 'bar',
+            data: {
+                labels: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.LabelsAdhoc),
+                datasets: [{
+                    label: "Succeded",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(2,117,216,0.2)",
+                    borderColor: "rgba(2,117,216,1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(2,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.DataSucceededAdhoc),
+                },
+                {
+                    label: "Failed",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(255,117,216,0.2)",
+                    borderColor: "rgba(255,117,216,1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(255,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(255,117,216,1)",
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.DataFailedAdhoc),
+                }],
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        },
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.MaxYTickAdhoc),
+                            maxTicksLimit: 5
+                        },
+                        gridLines: {
+                            color: "rgba(0, 0, 0, .125)",
+                        },
+                        stacked: true
                     }],
                 },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            time: {
-                                unit: 'date'
-                            },
-                            gridLines: {
-                                display: false
-                            },
-                            ticks: {
-                                maxTicksLimit: 7
-                            },
-                            stacked: true
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                min: 0,
-                                max: 40000,
-                                maxTicksLimit: 5
-                            },
-                            gridLines: {
-                                color: "rgba(0, 0, 0, .125)",
-                            },
-                            stacked: true
-                        }],
-                    },
-                    legend: {
-                        display: true
-                    }
+                legend: {
+                    display: true
                 }
+            }
         };
 
-        var ctx = document.getElementById("myAreaChart1");
-        var myLineChart = new Chart(ctx, chartSettings);
+        var chartSettingsBatch = {
+            type: 'bar',
+            data: {
+                labels: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.LabelsBatch),
+                datasets: [{
+                    label: "Succeded",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(2,117,216,0.2)",
+                    borderColor: "rgba(2,117,216,1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(2,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.DataSucceededBatch),
+                },
+                {
+                    label: "Failed",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(255,117,216,0.2)",
+                    borderColor: "rgba(255,117,216,1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(255,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(255,117,216,1)",
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.DataFailedBatch),
+                }],
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        },
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.MaxYTickBatch),
+                            maxTicksLimit: 5
+                        },
+                        gridLines: {
+                            color: "rgba(0, 0, 0, .125)",
+                        },
+                        stacked: true
+                    }],
+                },
+                legend: {
+                    display: true
+                }
+            }
+        };
 
-        var ctx = document.getElementById("myAreaChart2");
-        var myLineChart = new Chart(ctx, chartSettings);
+        var chartSettingsMessages = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    label: 'Dataset 1'
+                }],
+                labels: [
+                    'Red',
+                    'Orange',
+                    'Yellow',
+                    'Green',
+                    'Blue'
+                ]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'right',
+                },
+                title: {
+                    display: true,
+                    text: 'Error Messages'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+        var ctx = document.getElementById("myAreaChartAdhoc").getContext('2d');
+        var myLineChart = new Chart(ctx, chartSettingsAdhoc);
+
+        var ctx = document.getElementById("myAreaChartBatch").getContext('2d');
+        var myLineChart = new Chart(ctx, chartSettingsBatch);
+
+        var ctx = document.getElementById("messagesChart").getContext('2d');
+        var myLineChart = new Chart(ctx, chartSettingsMessages);
 
     </script>
-    }
+}
 
 <div class="container-fluid">
     <div class="row chart-container container-fluid">
         <div class="chart-wrapper">
             <div class="card-header">
                 <i class="fas fa-chart-area"></i>
-                Area Chart Example
+                Adhoc Results
             </div>
-            <div class="card-body"><canvas id="myAreaChart1" width="100%" height="90%"></canvas></div>
+            <div class="card-body"><canvas id="myAreaChartAdhoc" width="100%" height="90%"></canvas></div>
         </div>
         <div class="chart-wrapper">
             <div class="card-header">
                 <i class="fas fa-chart-area"></i>
-                Area Chart Example
+                Batch Results
             </div>
-            <div class="card-body"><canvas id="myAreaChart2" width="100%" height="90%"></canvas></div>
+            <div class="card-body"><canvas id="myAreaChartBatch" width="100%" height="90%"></canvas></div>
+        </div>
+        <div class="chart-wrapper">
+            <div class="card-header">
+                <i class="fas fa-chart-area"></i>
+                Error Messages
+            </div>
+            <div class="card-body"><canvas id="messagesChart" width="100%" height="90%"></canvas></div>
         </div>
     </div>
-    <div class="table-container">
+    @*<div class="table-container">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -584,5 +704,5 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
