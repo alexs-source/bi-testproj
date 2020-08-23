@@ -9,6 +9,7 @@ using bi_testproj.Models;
 using bi_testproj.Utils;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Net.Sockets;
 
 namespace bi_testproj.Controllers
 {
@@ -27,19 +28,24 @@ namespace bi_testproj.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var sqlQuery = "select taskcd.[Date], taskst.[Task Status], tasks.JobId, tasks.[User Group Name], taskst.[Task Message] from [dbo].[Fact_Task] as tasks "
-                            + "inner join[dbo].[Dim_TaskCreationDate] as taskcd "
+            var sqlQuery = "select taskcd.[Date], taskst.[Task Status], tasks.JobId, tasks.[User Group Name], taskst.[Task Message], taskin.[ISIN], taskin.[Instrument Id], tasks.TaskId "
+                            + "from [dbo].[Fact_Task] as tasks "
+                            + "inner join [dbo].[Dim_TaskCreationDate] as taskcd "
                             + "on tasks.[Creation Date Key] = taskcd.[Date Key] "
-                            + "inner join[dbo].[Dim_TaskStatus] as taskst "
+                            + "inner join [dbo].[Dim_TaskStatus] as taskst "
                             + "on taskst.[Task Status Key] = tasks.[Task Status Key] "
+                            + "inner join [dbo].[Dim_TaskInfo] as taskin "
+                            + "on taskin.[Task Info Key] = tasks.[Task Info Key] "
                             + "where taskcd.[Date] between @startDate and @endDate";
 
             var parameters = new Dictionary<string, object>();
-            parameters.Add("@startDate", DateTime.Now.AddDays(-12));
+            parameters.Add("@startDate", DateTime.Now.AddDays(-14));
             parameters.Add("@endDate", DateTime.Now);
 
             var queryResults = await connectionHelper.GetDbResultAsync(sqlQuery, parameters);
 
+
+            // Adhoc and Batch Charts
             var succeededAdhoc = new SortedList<DateTime, int>();
             var failedAdhoc = new SortedList<DateTime, int>();
 
@@ -86,16 +92,34 @@ namespace bi_testproj.Controllers
             ViewBag.DataFailedBatch = failedBatch.Values.ToArray();
             ViewBag.MaxYTickBatch = GetMaxYTick(succeededBatch.Values.ToArray(), failedBatch.Values.ToArray());
 
+
+            //Erros Message Chart
             var messages = new Dictionary<string, int>();
             foreach (var row in queryResults.Where(x => !String.IsNullOrEmpty((string)x[4])))
             {
                 var message = (string)row[4];
 
                 if (!messages.ContainsKey(message))
-                    messages.Add(message, 0);
+                    messages.Add(message, 1);
                 else
                     messages[message]++;
             }
+
+            ViewBag.ErrorMessages = messages.Keys.ToArray();
+            ViewBag.nErrorMessages = messages.Values.ToArray();
+
+            //Summary table
+            var headers = new[] { "TaskId", "Task Status", "JobId", "User Group Name", "Task Message", "ISIN", "Instrument Id" };
+            var rows = new List<string[]>();
+
+            foreach (var row in queryResults)
+            {
+                var newRow = new string [] { (string)row[7], (string)row[1], (string)row[2], (string)row[3], (string)row[4], (string)row[5], (string)row[6] };
+                rows.Add(newRow);
+            }
+
+            ViewBag.TableHeaders = headers;
+            ViewBag.TableRows = rows;
 
             return View();
         }

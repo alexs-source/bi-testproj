@@ -59,8 +59,8 @@ min-height: 100%;
 }
 
 body {
-/* Margin bottom by footer height */
-margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 .footer {
 position: absolute;
@@ -163,6 +163,7 @@ background-color: #343a40;
     position: fixed;
     left: 225px;
     top: 56px;
+    height: calc(50vh - 56px);
 }
 
 .sb-sidenav {
@@ -244,6 +245,10 @@ background-color: #343a40;
     border-radius: 4px;
     margin: 2.5px;
     padding-bottom: 10px
+}
+
+.table-container {
+    overflow-y: scroll;
 }
 
 table {
