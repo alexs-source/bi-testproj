@@ -1,27 +1,7 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-white-space: normal;
-text-align: center;
-word-break: break-all;
-}
-
+﻿
 /* Provide sufficient contrast against white background */
 a {
 color: #0366d6;
-}
-
-.btn-primary {
-color: #fff;
-background-color: #1b6ec2;
-border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-color: #fff;
-background-color: #1b6ec2;
-border-color: #1861ac;
 }
 
 /* Sticky footer styles
@@ -33,22 +13,6 @@ font-size: 14px;
 html {
 font-size: 16px;
 }
-}
-
-.border-top {
-border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-font-size: 1rem;
-line-height: inherit;
 }
 
 /* Sticky footer styles
@@ -70,156 +34,140 @@ white-space: nowrap;
 line-height: 60px; /* Vertically center the text there */
 }
 
-.dropdown-item {
-display: block;
-width: 100%;
-padding: 0.25rem 1.5rem;
-clear: both;
-font-weight: 400;
-color: #212529;
-text-align: inherit;
-white-space: nowrap;
-background-color: transparent;
-border: 0;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
 }
 
-.dropdown-item:hover, .dropdown-item:focus {
-color: #16181b;
-text-decoration: none;
-background-color: #f8f9fa;
-}
-
-.dropdown-item.active, .dropdown-item:active {
-color: #fff;
-text-decoration: none;
-background-color: #007bff;
-}
-
-.dropdown-item.disabled, .dropdown-item:disabled {
-color: #6c757d;
-pointer-events: none;
-background-color: transparent;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.sb-sidenav-dark {
-background-color: #212529;
-color: rgba(255, 255, 255, 0.5);
-}
-.sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
-color: rgba(255, 255, 255, 0.25);
-}
-
-.sb-sidenav-dark .sb-sidenav-menu .nav-link {
-color: rgba(255, 255, 255, 0.5);
-}
-
-.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-nav-link-icon {
-color: rgba(255, 255, 255, 0.25);
-}
-
-.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
-color: rgba(255, 255, 255, 0.25);
-}
-
-.sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
-color: #fff;
-}
-
-.sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
-color: #fff;
-}
-
-.sb-sidenav-dark .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
-    color: #fff;
-}
-
-.sb-sidenav-dark {
-background-color: #343a40;
-}
-
-
-.nav-link {
-    background-color: darkslateblue;
-}
-
-#layoutSidenav_nav {
+header {
     position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    width: 225px;
-    height: 100%;
-    z-index: 1030;
-    padding-top: 56px;
-    overflow-y: auto;
-}
-
-#layoutSidenav_content {
-    position: fixed;
-    left: 225px;
-    top: 56px;
-    height: calc(50vh - 56px);
-}
-
-.sb-sidenav {
-    height: 100%;
+    background: #22242A;
+    padding: 20px;
     width: 100%;
+    height: 30px;
 }
 
-.sb-nav-link-icon {
-    margin-right: 0.5rem;
-}
-
-.nav-link {
-    padding: 0.5rem 1rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid transparent;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    display: flex;
-    align-items: center;
-    position: relative;
-    transition: transform 0.15s ease;
-    font-size: 0.9rem;
-}
-
-.sb-sidenav-menu-heading {
-    padding: 1.75rem 1rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: bold;
+.left-area h3 {
+    color: #fff;
+    margin: 0;
     text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 900;
 }
 
-#layoutSidenav {
+.left-area span {
+    color: #1DC4E7;
+}
+
+.logout_btn {
+    padding: 5px;
+    background-color: #1983D3;
+    text-decoration: none;
+    float: right;
+    margin-top: -30px;
+    margin-right: 40px;
+    border-radius: 2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    transition: 0.5s;
+    transition-property: background;
+}
+
+    .logout_btn:hover {
+        background-color: #0D9D88;
+    }
+
+.sidebar {
+    background: #2F323A;
+    margin-top: 70px;
+    /* padding: 30px; */
     position: fixed;
-    top: 0;
-    right: 0;
     left: 0;
-    z-index: 1030;
+    width: 250px;
+    height: 100%;
+    transition: 0.5s;
+    transition-property: left;
 }
 
-#layoutSidenav #layoutSidenav_nav .sb-sidenav {
-    padding-top: 56px;
+    .sidebar a {
+        color: #fff;
+        display: block;
+        width: 100%;
+        line-height: 60px;
+        text-decoration: none;
+        padding-left: 40px;
+        box-sizing: border-box;
+        transition: 0.3s;
+        transition-property: background;
+    }
+
+        .sidebar a:hover {
+            background: #19B3D3
+        }
+
+    .sidebar i {
+        padding-right: 10px;
+    }
+
+label #sidebar_btn {
+    z-index: 1;
+    color: #fff;
+    position: fixed;
+    cursor: pointer;
+    left: 300px;
+    font-size: 20px;
+    margin: 5px 0;
+    transition: 0.3s;
+    transition-property: background;
 }
 
-.nav {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    flex-direction: column;
+    label #sidebar_btn:hover {
+        color: #19B3D3;
+    }
+
+#check:checked ~ .sidebar {
+    left: -190px;
 }
+
+    #check:checked ~ .sidebar a span {
+        display: none;
+    }
+
+    #check:checked ~ .sidebar div {
+        display: none;
+    }
+
+    #check:checked ~ .sidebar h4 {
+        display: none;
+    }
+
+    #check:checked ~ .sidebar a {
+        font-size: 20px;
+        margin-left: 170px;
+        width: 80px;
+    }
+
+.content {
+    top: 70px;
+    padding: 10px;
+    margin-left: 250px;
+    background-color: aqua;
+    position: fixed;
+}
+
+main {
+    display: inline;
+}
+
+#check {
+    display: none;
+}
+
+    #check:checked ~ .content {
+        margin-left: 60px;
+    }
 
 .card-body {
     flex: 1 1 auto;
@@ -246,6 +194,10 @@ background-color: #343a40;
     margin: 2.5px;
     padding-bottom: 10px
 }
+
+/*#chart1 {
+    position:absolute
+}*/
 
 .table-container {
     overflow-y: scroll;
