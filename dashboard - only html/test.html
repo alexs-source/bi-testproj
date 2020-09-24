@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Position absolute und fixed</title>
+<style type="text/css">
+p {font-size:30px; line-height:3em;}
+div.pos {width:49%; text-align:center; border:2px solid #00f;}
+div#abs {position:absolute; bottom:20px; left:0;}
+div#fix {position:fixed; bottom:10px; right:0;}
+</style>
+</head>
+<body>
+ <h1>The Wiki Center Of Exampland</h1>
+ <nav>
+  <ul>
+   <li><a href="/">Home</a></li>
+   <li><a href="/events">Current Events</a></li>
+   ...more...
+  </ul>
+ </nav>
+ <article>
+  <header>
+   <h1>Demos in Exampland</h1>
+   <p>Written by A. N. Other.</p>
+  </header>
+  <nav>
+   <ul>
+    <li><a href="#public">Public demonstrations</a></li>
+    <li><a href="#destroy">Demolitions</a></li>
+    ...more...
+   </ul>
+  </nav>
+  <div>
+   <section id="public">
+    <h1>Public demonstrations</h1>
+    <p>...more...</p>
+   </section>
+   <section id="destroy">
+    <h1>Demolitions</h1>
+    <p>...more...</p>
+   </section>
+   ...more...
+  </div>
+  <footer>
+   <p><a href="?edit">Edit</a> | <a href="?delete">Delete</a> | <a href="?Rename">Rename</a></p>
+  </footer>
+ </article>
+ <footer>
+  <p><small>© copyright 1998 Exampland Emperor</small></p>
+ </footer>
+</body>
+</html>

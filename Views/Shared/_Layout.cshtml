@@ -4,23 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - bi_testproj</title>
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    @*<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />*@
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
+    <div class="kidcalcheader">
         @*<label for="check">
                 <i class="fas fa-bars" id="sidebar_btn"></i>
             </label>*@
         <div class="left-area">
-            <a class="navbar-brand" href="index.html"><h3>Kid<span>Calc</span></h3></a>
+            <a href="index.html"><h3>Kid<span>Calc</span></h3></a>
         </div>
         <div class="right-area">
             <a href="#" class="logout_btn">Logout</a>
         </div>
-    </header>
+    </div>
 
     <!-- Navbar-->
     <div class="sidebar">
@@ -31,19 +31,17 @@
         <a href="#"><i class="fas fa-info-circle"></i> <span>About</span></a>
         <a href="#"><i class="fas fa-sliders-h"></i> <span>Settings</span></a>
     </div>
-        <div class="content">
-            <main role="main">
-                @RenderBody()
-            </main>
-        </div>
+    <div class="content">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - bi_testproj - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <center class="footer">
+        &copy; 2020 - bi_testproj - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </center>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>

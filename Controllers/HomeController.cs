@@ -28,6 +28,9 @@ namespace bi_testproj.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var startDateTime = new DateTime(2020, 06, 01);
+            var endDateTime = new DateTime(2020, 06, 30);
+
             var sqlQuery = "select taskcd.[Date], taskst.[Task Status], tasks.JobId, tasks.[User Group Name], taskst.[Task Message], taskin.[ISIN], taskin.[Instrument Id], tasks.TaskId "
                             + "from [dbo].[Fact_Task] as tasks "
                             + "inner join [dbo].[Dim_TaskCreationDate] as taskcd "
@@ -39,8 +42,8 @@ namespace bi_testproj.Controllers
                             + "where taskcd.[Date] between @startDate and @endDate";
 
             var parameters = new Dictionary<string, object>();
-            parameters.Add("@startDate", DateTime.Now.AddDays(-14));
-            parameters.Add("@endDate", DateTime.Now);
+            parameters.Add("@startDate", startDateTime);
+            parameters.Add("@endDate", endDateTime);
 
             var queryResults = await connectionHelper.GetDbResultAsync(sqlQuery, parameters);
 
@@ -95,6 +98,8 @@ namespace bi_testproj.Controllers
 
             //Erros Message Chart
             var messages = new Dictionary<string, int>();
+            var messageBackgroundColors = new List<string>();
+            var rg = new Random();
             foreach (var row in queryResults.Where(x => !String.IsNullOrEmpty((string)x[4])))
             {
                 var message = (string)row[4];
@@ -103,10 +108,14 @@ namespace bi_testproj.Controllers
                     messages.Add(message, 1);
                 else
                     messages[message]++;
+
+                
+                messageBackgroundColors.Add($"rgba({rg.Next(0,255)},{rg.Next(0, 255)},{rg.Next(0, 255)},1)");
             }
 
             ViewBag.ErrorMessages = messages.Keys.ToArray();
             ViewBag.nErrorMessages = messages.Values.ToArray();
+            ViewBag.MessageBackgroundColors = messageBackgroundColors.ToArray();
 
             //Summary table
             var headers = new[] { "TaskId", "Task Status", "JobId", "User Group Name", "Task Message", "ISIN", "Instrument Id" };
