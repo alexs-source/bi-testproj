@@ -181,6 +181,32 @@
         var ctx = document.getElementById("messagesChart").getContext('2d');
         var myLineChart = new Chart(ctx, chartSettingsMessages);
 
+        var table = null;
+        $(document).ready(function () {
+            table = $('#dataTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'csv'
+                ]
+            });
+        });
+
+        @*function download_csv() {
+            var headers = @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.TableHeaders);
+            var csv = headers.join(',') + "\n";
+            var data = @bi_testproj.Utils.JavaScriptConvert.SerializeObject(ViewBag.TableRows);
+            data.forEach(function (row) {
+                csv += row.join(',');
+                csv += "\n";
+            });
+
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'data.csv';
+            hiddenElement.click();
+        }*@
+
     </script>
 }
     <div class="chart-container">

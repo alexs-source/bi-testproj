@@ -167,6 +167,11 @@ label #sidebar_btn {
     padding-bottom: 10px
 }
 
+.table-container {
+    background-color: lightblue;
+    border-radius: 4px;
+}
+
 table {
     border-collapse: collapse;
 }
