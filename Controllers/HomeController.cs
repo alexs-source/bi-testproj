@@ -20,7 +20,8 @@ namespace bi_testproj.Controllers
 
         public HomeController(ILogger<HomeController> logger)
         {
-            var connectionString = "Data Source=localhost;Initial Catalog=KidCalc_DW;Integrated Security=True";
+            var connectionString = "Server=tcp:testprojsqlserver.database.windows.net,1433;Initial Catalog=KidCalc_DW;Persist Security Info=False;User ID=adminsql;Password=bitest_123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
             connectionHelper = new DbConnectioHelper(connectionString);
 
             _logger = logger;
